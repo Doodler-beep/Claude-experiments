@@ -26,22 +26,27 @@ As a product marketer, you know the pain:
 
 ## Quick Start
 
+### 🍎 New to This? Start Here!
+
+**Non-technical / First time on MacBook?**
+👉 **[START_HERE_MACBOOK.md](START_HERE_MACBOOK.md)** - Step-by-step guide (assumes zero technical knowledge)
+
+**Want a quick reference?**
+👉 **[CHEAT_SHEET.md](CHEAT_SHEET.md)** - All commands on one page
+
+### ⚡ Quick Setup (If you know Terminal)
+
 ```bash
 # Install dependencies
-pip install -r requirements.txt
+./setup.sh
 
-# Set up your configuration
-cp config.example.json config.json
-# Edit config.json with your competitors and Claude API key
+# Edit config.json with your API key and competitors
 
 # Run your first scan
+source venv/bin/activate
 python main.py scan
-
-# Generate intelligence report
+python main.py analyze
 python main.py report
-
-# Start continuous monitoring
-python main.py monitor
 ```
 
 ## Real-World Impact
@@ -76,7 +81,12 @@ Showcase strategic thinking + technical execution in interviews.
 
 ## Documentation
 
-- **[QUICKSTART.md](QUICKSTART.md)** - Get running in 10 minutes
+**Getting Started:**
+- **[START_HERE_MACBOOK.md](START_HERE_MACBOOK.md)** - Non-technical walkthrough for MacBook users
+- **[CHEAT_SHEET.md](CHEAT_SHEET.md)** - Quick reference for all commands
+- **[QUICKSTART.md](QUICKSTART.md)** - Detailed usage guide and examples
+
+**Advanced Guides:**
 - **[MONETIZATION.md](MONETIZATION.md)** - Turn this into revenue ($90K-$600K+/year)
 - **[SHOWCASE.md](SHOWCASE.md)** - Use this to advance your career
 

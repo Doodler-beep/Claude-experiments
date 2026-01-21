@@ -1,0 +1,51 @@
+{
+  "api_keys": {
+    "anthropic_api_key": "your-claude-api-key-here"
+  },
+  "competitors": [
+    {
+      "name": "Competitor A",
+      "urls": {
+        "homepage": "https://example-competitor-a.com",
+        "pricing": "https://example-competitor-a.com/pricing",
+        "features": "https://example-competitor-a.com/features"
+      },
+      "priority": "high"
+    },
+    {
+      "name": "Competitor B",
+      "urls": {
+        "homepage": "https://example-competitor-b.com",
+        "pricing": "https://example-competitor-b.com/pricing"
+      },
+      "priority": "medium"
+    }
+  ],
+  "monitoring": {
+    "scan_frequency_hours": 24,
+    "alert_on_changes": true,
+    "generate_weekly_report": true,
+    "weekly_report_day": "monday"
+  },
+  "analysis": {
+    "focus_areas": [
+      "pricing changes",
+      "feature additions/removals",
+      "messaging shifts",
+      "product launches",
+      "positioning changes"
+    ],
+    "your_product": {
+      "name": "Your Product Name",
+      "category": "Your Product Category",
+      "key_differentiators": [
+        "Your unique selling point 1",
+        "Your unique selling point 2"
+      ]
+    }
+  },
+  "output": {
+    "reports_directory": "./reports",
+    "database_path": "./data/intelligence.db"
+  }
+}

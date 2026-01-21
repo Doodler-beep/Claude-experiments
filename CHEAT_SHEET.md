@@ -21,8 +21,11 @@ cd Claude-experiments
 # 5. Run setup
 ./setup.sh
 
-# 6. Get API key from console.anthropic.com
-# 7. Add API key to config.json
+# 6. Start Web UI for easy setup
+source venv/bin/activate
+python main.py web
+
+# 7. Open browser and follow setup wizard!
 ```
 
 ---
@@ -46,6 +49,24 @@ python main.py scan && python main.py analyze
 
 ---
 
+## 🌐 NEW: Web UI (Easiest!)
+
+```bash
+# Start Web UI
+python main.py web
+
+# Then open browser to: http://localhost:5000
+```
+
+**What you can do in Web UI:**
+- Set up API key (no file editing!)
+- Auto-discover competitors
+- Add/remove competitors with clicks
+- View reports in browser
+- Check system status
+
+---
+
 ## 📊 All Commands
 
 **Always run this first:**
@@ -57,11 +78,18 @@ source venv/bin/activate
 
 | Command | What it does |
 |---------|-------------|
+| `python main.py web` | 🌐 Open Web UI (recommended!) |
+| `python main.py discover <url>` | 🔍 Auto-find competitors |
 | `python main.py scan` | Check all competitors for changes |
 | `python main.py analyze` | Get AI insights on detected changes |
 | `python main.py report` | Generate weekly intelligence brief |
 | `python main.py gaps` | Find market opportunities |
 | `python main.py status` | See what you're tracking |
+
+**Example: Auto-discover competitors**
+```bash
+python main.py discover https://yourcompany.com
+```
 
 ---
 
@@ -171,7 +199,8 @@ cd Claude-experiments
 
 ## 📚 More Help
 
-- **START_HERE_MACBOOK.md** - Detailed walkthrough
+- **WEB_UI_GUIDE.md** - Web interface guide (easiest!)
+- **START_HERE_MACBOOK.md** - Terminal walkthrough
 - **QUICKSTART.md** - Usage examples
 - **MONETIZATION.md** - Make money from this
 - **SHOWCASE.md** - Career advancement tips

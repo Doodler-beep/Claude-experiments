@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+{% block title %}Discover Competitors{% endblock %}
+
+{% block content %}
+<div class="card">
+    <h2>🔍 Discover Competitors Automatically</h2>
+    <p style="margin-bottom: 30px;">Enter your company's website and AI will find your competitors for you.</p>
+
+    <form method="POST">
+        <div class="form-group">
+            <label for="company_url">Your Company Website</label>
+            <input type="url"
+                   id="company_url"
+                   name="company_url"
+                   placeholder="https://yourcompany.com"
+                   required>
+            <small style="color: #718096; display: block; margin-top: 5px;">
+                The system will analyze your website to understand what you do
+            </small>
+        </div>
+
+        <div class="form-group">
+            <label for="num_competitors">How many competitors to find?</label>
+            <select id="num_competitors" name="num_competitors">
+                <option value="5">5 competitors</option>
+                <option value="10" selected>10 competitors (recommended)</option>
+                <option value="15">15 competitors</option>
+                <option value="20">20 competitors</option>
+            </select>
+        </div>
+
+        <button type="submit" class="btn">🚀 Discover Competitors</button>
+    </form>
+
+    <div style="margin-top: 40px; padding: 20px; background: #f7fafc; border-radius: 8px;">
+        <h3 style="margin-bottom: 15px;">How it works:</h3>
+        <ol style="margin-left: 20px; line-height: 2;">
+            <li>AI analyzes your website to understand your business</li>
+            <li>Searches for similar companies in your industry</li>
+            <li>Identifies direct competitors</li>
+            <li>You review and select which ones to track</li>
+        </ol>
+        <p style="margin-top: 15px; color: #718096;">
+            ⏱️ This typically takes 1-2 minutes
+        </p>
+    </div>
+</div>
+
+<div class="card">
+    <h2>Or Add Manually</h2>
+    <p style="margin-bottom: 20px;">Already know your competitors? <a href="{{ url_for('competitors') }}" style="color: #667eea;">Add them manually →</a></p>
+</div>
+{% endblock %}

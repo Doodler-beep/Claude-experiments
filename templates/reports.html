@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block title %}Reports{% endblock %}
+
+{% block content %}
+<div class="card">
+    <h2>📄 Intelligence Reports</h2>
+
+    {% if reports %}
+    <p style="margin-bottom: 20px;">{{ reports|length }} reports available</p>
+
+    <ul class="competitor-list">
+        {% for report in reports %}
+        <li class="competitor-item">
+            <div class="competitor-info">
+                <h3>{{ report.name }}</h3>
+                <p style="margin-top: 5px; color: #718096;">
+                    Size: {{ (report.size / 1024) | round(1) }} KB •
+                    Modified: {{ report.modified | int }}
+                </p>
+            </div>
+            <div>
+                <a href="{{ url_for('view_report', filename=report.name) }}" class="btn btn-small">View</a>
+            </div>
+        </li>
+        {% endfor %}
+    </ul>
+    {% else %}
+    <div style="padding: 40px; text-align: center; background: #f7fafc; border-radius: 8px;">
+        <p style="margin-bottom: 20px; color: #718096;">No reports generated yet</p>
+        <div style="padding: 20px; background: white; border-radius: 8px; border-left: 4px solid #667eea;">
+            <p style="margin-bottom: 15px;"><strong>To generate reports, use Terminal:</strong></p>
+            <code style="display: block; background: #f7fafc; padding: 10px; border-radius: 4px;">
+                python main.py scan<br>
+                python main.py analyze<br>
+                python main.py report
+            </code>
+        </div>
+    </div>
+    {% endif %}
+</div>
+
+<div class="card">
+    <h2>💡 Report Types</h2>
+    <div style="line-height: 2;">
+        <p><strong>intelligence_brief_*.md</strong> - Weekly competitive intelligence summaries</p>
+        <p><strong>market_gaps_*.json</strong> - Market opportunity analysis</p>
+        <p><strong>alert_*.txt</strong> - Critical change alerts</p>
+    </div>
+</div>
+{% endblock %}

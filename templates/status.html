@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+
+{% block title %}System Status{% endblock %}
+
+{% block content %}
+<div class="card">
+    <h2>⚙️ System Status</h2>
+
+    {% if status %}
+    <div class="stats-grid">
+        <div class="stat-card" style="background: {% if status.api_configured %}linear-gradient(135deg, #48bb78 0%, #38a169 100%){% else %}linear-gradient(135deg, #f56565 0%, #e53e3e 100%){% endif %};">
+            <div class="stat-number">{{ '✓' if status.api_configured else '✗' }}</div>
+            <div class="stat-label">API Configured</div>
+        </div>
+
+        <div class="stat-card">
+            <div class="stat-number">{{ status.competitors_tracked }}</div>
+            <div class="stat-label">Competitors Tracked</div>
+        </div>
+
+        {% if status.recent_changes is defined %}
+        <div class="stat-card">
+            <div class="stat-number">{{ status.recent_changes }}</div>
+            <div class="stat-label">Changes (7 days)</div>
+        </div>
+        {% endif %}
+
+        {% if status.unanalyzed is defined %}
+        <div class="stat-card" style="background: {% if status.unanalyzed > 0 %}linear-gradient(135deg, #ed8936 0%, #dd6b20 100%){% else %}linear-gradient(135deg, #48bb78 0%, #38a169 100%){% endif %};">
+            <div class="stat-number">{{ status.unanalyzed }}</div>
+            <div class="stat-label">Pending Analysis</div>
+        </div>
+        {% endif %}
+    </div>
+
+    {% if config %}
+    <div style="margin-top: 40px;">
+        <h3 style="margin-bottom: 15px;">Configuration</h3>
+        <div style="padding: 20px; background: #f7fafc; border-radius: 8px; font-family: monospace; font-size: 13px;">
+            <p><strong>Product:</strong> {{ config.analysis.your_product.name }}</p>
+            <p style="margin-top: 5px;"><strong>Category:</strong> {{ config.analysis.your_product.category }}</p>
+            <p style="margin-top: 5px;"><strong>Database:</strong> {{ config.output.database_path }}</p>
+            <p style="margin-top: 5px;"><strong>Reports:</strong> {{ config.output.reports_directory }}</p>
+        </div>
+    </div>
+    {% endif %}
+
+    <div style="margin-top: 40px;">
+        <h3 style="margin-bottom: 15px;">Terminal Commands</h3>
+        <div style="padding: 20px; background: #2d3748; color: #f7fafc; border-radius: 8px; font-family: monospace;">
+            <p style="color: #48bb78;"># Activate environment</p>
+            <p>source venv/bin/activate</p>
+            <br>
+            <p style="color: #48bb78;"># Scan competitors</p>
+            <p>python main.py scan</p>
+            <br>
+            <p style="color: #48bb78;"># Analyze changes</p>
+            <p>python main.py analyze</p>
+            <br>
+            <p style="color: #48bb78;"># Generate report</p>
+            <p>python main.py report</p>
+            <br>
+            <p style="color: #48bb78;"># Find market gaps</p>
+            <p>python main.py gaps</p>
+        </div>
+    </div>
+
+    {% else %}
+    <div style="padding: 40px; text-align: center; background: #f7fafc; border-radius: 8px;">
+        <p style="margin-bottom: 20px; color: #718096;">No configuration found</p>
+        <a href="{{ url_for('setup') }}" class="btn">Start Setup</a>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

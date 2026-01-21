@@ -24,29 +24,60 @@ As a product marketer, you know the pain:
 
 **This solves all of that. Automatically.**
 
+## ✨ NEW: Web UI + Auto-Discovery
+
+**Two major features just added:**
+
+### 1. 🌐 Web UI (Point-and-Click Interface)
+No more editing config files! Manage everything in your browser.
+
+```bash
+python main.py web
+# Opens at http://localhost:5000
+```
+
+Features:
+- Set up API key through web form
+- Add/remove competitors with clicks
+- View reports in browser
+- Check system status
+- **Perfect for non-technical users!**
+
+### 2. 🔍 Automatic Competitor Discovery
+Just enter your URL - AI finds your competitors automatically!
+
+```bash
+python main.py discover https://yourcompany.com
+# Or use the Web UI for a better experience
+```
+
+---
+
 ## Quick Start
 
 ### 🍎 New to This? Start Here!
 
-**Non-technical / First time on MacBook?**
-👉 **[START_HERE_MACBOOK.md](START_HERE_MACBOOK.md)** - Step-by-step guide (assumes zero technical knowledge)
+**Want the easiest experience? (Recommended)**
+👉 **[WEB_UI_GUIDE.md](WEB_UI_GUIDE.md)** - Point-and-click interface guide
+
+**Prefer Terminal?**
+👉 **[START_HERE_MACBOOK.md](START_HERE_MACBOOK.md)** - Terminal-based walkthrough
 
 **Want a quick reference?**
 👉 **[CHEAT_SHEET.md](CHEAT_SHEET.md)** - All commands on one page
 
-### ⚡ Quick Setup (If you know Terminal)
+### ⚡ Quick Setup (Web UI Method)
 
 ```bash
-# Install dependencies
+# 1. Install (one-time)
 ./setup.sh
 
-# Edit config.json with your API key and competitors
-
-# Run your first scan
+# 2. Start Web UI
 source venv/bin/activate
-python main.py scan
-python main.py analyze
-python main.py report
+python main.py web
+
+# 3. Open browser to http://localhost:5000
+# 4. Follow the setup wizard!
 ```
 
 ## Real-World Impact
@@ -81,14 +112,15 @@ Showcase strategic thinking + technical execution in interviews.
 
 ## Documentation
 
-**Getting Started:**
-- **[START_HERE_MACBOOK.md](START_HERE_MACBOOK.md)** - Non-technical walkthrough for MacBook users
-- **[CHEAT_SHEET.md](CHEAT_SHEET.md)** - Quick reference for all commands
-- **[QUICKSTART.md](QUICKSTART.md)** - Detailed usage guide and examples
+**Getting Started (Pick Your Style):**
+- **[WEB_UI_GUIDE.md](WEB_UI_GUIDE.md)** - 🌐 Web interface guide (easiest, recommended for beginners)
+- **[START_HERE_MACBOOK.md](START_HERE_MACBOOK.md)** - 💻 Terminal walkthrough for MacBook users
+- **[CHEAT_SHEET.md](CHEAT_SHEET.md)** - ⚡ Quick command reference
+- **[QUICKSTART.md](QUICKSTART.md)** - 📖 Detailed usage guide and examples
 
 **Advanced Guides:**
-- **[MONETIZATION.md](MONETIZATION.md)** - Turn this into revenue ($90K-$600K+/year)
-- **[SHOWCASE.md](SHOWCASE.md)** - Use this to advance your career
+- **[MONETIZATION.md](MONETIZATION.md)** - 💰 Turn this into revenue ($90K-$600K+/year)
+- **[SHOWCASE.md](SHOWCASE.md)** - 🎯 Use this to advance your career
 
 ## Architecture
 

@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+
+{% block title %}Manage Competitors{% endblock %}
+
+{% block content %}
+<div class="card">
+    <h2>📊 Manage Competitors</h2>
+
+    {% if your_product %}
+    <div style="padding: 20px; background: #f7fafc; border-radius: 8px; margin-bottom: 30px;">
+        <h3 style="margin-bottom: 10px;">Your Product: {{ your_product.name }}</h3>
+        <p><strong>Category:</strong> {{ your_product.category }}</p>
+    </div>
+    {% endif %}
+
+    {% if competitors %}
+    <h3 style="margin-bottom: 15px;">Currently Tracking ({{ competitors|length }} competitors)</h3>
+
+    <ul class="competitor-list">
+        {% for competitor in competitors %}
+        <li class="competitor-item">
+            <div class="competitor-info">
+                <h3>{{ competitor.name }} <span class="badge badge-{{ competitor.priority }}">{{ competitor.priority }}</span></h3>
+                <p style="margin-top: 5px;">Monitoring {{ competitor.urls|length }} pages:</p>
+                <ul style="margin-left: 20px; margin-top: 5px; color: #718096; font-size: 14px;">
+                    {% for page_type, url in competitor.urls.items() %}
+                    <li>{{ page_type }}: {{ url }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div>
+                <a href="{{ url_for('remove_competitor', index=loop.index0) }}"
+                   class="btn btn-danger btn-small"
+                   onclick="return confirm('Remove {{ competitor.name }}?')">
+                    Remove
+                </a>
+            </div>
+        </li>
+        {% endfor %}
+    </ul>
+    {% else %}
+    <div style="padding: 40px; text-align: center; background: #f7fafc; border-radius: 8px;">
+        <p style="margin-bottom: 20px; color: #718096;">No competitors tracked yet</p>
+        <a href="{{ url_for('discover') }}" class="btn">🔍 Discover Competitors</a>
+    </div>
+    {% endif %}
+</div>
+
+<div class="card">
+    <h2>➕ Add Competitor Manually</h2>
+
+    <form method="POST" action="{{ url_for('add_competitor') }}">
+        <div class="form-group">
+            <label for="name">Competitor Name</label>
+            <input type="text" id="name" name="name" placeholder="e.g., Notion" required>
+        </div>
+
+        <div class="form-group">
+            <label for="homepage">Homepage URL</label>
+            <input type="url" id="homepage" name="homepage" placeholder="https://competitor.com" required>
+        </div>
+
+        <div class="form-group">
+            <label for="pricing">Pricing Page URL (optional)</label>
+            <input type="url" id="pricing" name="pricing" placeholder="https://competitor.com/pricing">
+        </div>
+
+        <div class="form-group">
+            <label for="priority">Priority</label>
+            <select id="priority" name="priority">
+                <option value="high">High</option>
+                <option value="medium" selected>Medium</option>
+                <option value="low">Low</option>
+            </select>
+        </div>
+
+        <button type="submit" class="btn">Add Competitor</button>
+    </form>
+</div>
+{% endblock %}

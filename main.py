@@ -18,6 +18,7 @@ from rich import print as rprint
 from src.competitor_tracker import CompetitorTracker, extract_pricing_info
 from src.change_detector import ChangeDetector
 from src.ai_analyst import AIAnalyst
+from src.competitor_discovery import CompetitorDiscovery
 
 
 console = Console()
@@ -251,6 +252,48 @@ class IntelligenceCenter:
         console.print(f"\n[bold]Database:[/bold] {self.db_path}")
         console.print(f"[bold]Reports:[/bold] {self.config['output']['reports_directory']}\n")
 
+    def discover(self, company_url: str, num_competitors: int = 10):
+        """Discover competitors automatically"""
+        console.print("\n[bold cyan]🔍 Discovering Competitors[/bold cyan]\n")
+
+        discovery = CompetitorDiscovery(self.config['api_keys']['anthropic_api_key'])
+
+        # Run discovery
+        results = discovery.run_discovery(company_url, num_competitors)
+
+        # Display results
+        console.print(f"\n[green]✓ Found {results['total_found']} competitors![/green]\n")
+
+        console.print("[bold]Your Company:[/bold]")
+        console.print(f"  Name: {results['your_company']['name']}")
+        console.print(f"  Industry: {results['your_company']['category']}")
+        console.print(f"  Description: {results['your_company']['description']}\n")
+
+        # Show competitors
+        table = Table(title="Discovered Competitors")
+        table.add_column("Name", style="cyan")
+        table.add_column("Priority", style="magenta")
+        table.add_column("Why Competitor", style="white")
+
+        for comp in results['competitors']:
+            table.add_row(
+                comp['name'],
+                comp['priority'],
+                comp.get('why_competitor', '')[:60] + "..."
+            )
+
+        console.print(table)
+
+        # Ask if user wants to save
+        console.print(f"\n[yellow]To save these competitors, use the web UI:[/yellow]")
+        console.print(f"[cyan]python main.py web[/cyan]\n")
+
+        # Optionally save raw results for review
+        reports_dir = Path(self.config['output']['reports_directory'])
+        discovery_file = reports_dir / f"discovery_{datetime.now().strftime('%Y%m%d_%H%M%S')}.json"
+        discovery_file.write_text(json.dumps(results, indent=2))
+        console.print(f"[green]Discovery results saved to: {discovery_file}[/green]\n")
+
 
 def main():
     """Main entry point"""
@@ -260,13 +303,17 @@ def main():
 [bold cyan]Competitive Intelligence Command Center[/bold cyan]
 
 Usage:
-  python main.py scan        - Scan all competitors for changes
-  python main.py analyze     - Analyze detected changes with AI
-  python main.py report      - Generate weekly intelligence brief
-  python main.py gaps        - Identify market gaps and opportunities
-  python main.py status      - Show current status
+  python main.py web                      - Open web UI (easy mode!)
+  python main.py discover <url>           - Auto-discover competitors
+  python main.py scan                     - Scan all competitors for changes
+  python main.py analyze                  - Analyze detected changes with AI
+  python main.py report                   - Generate weekly intelligence brief
+  python main.py gaps                     - Identify market gaps and opportunities
+  python main.py status                   - Show current status
 
 Examples:
+  python main.py web
+  python main.py discover https://yourcompany.com
   python main.py scan && python main.py analyze
   python main.py report
         """)
@@ -274,6 +321,27 @@ Examples:
 
     command = sys.argv[1].lower()
 
+    # Web UI doesn't need IntelligenceCenter
+    if command == 'web':
+        from src.web_ui import run_ui
+        run_ui()
+        return
+
+    # Discover command
+    if command == 'discover':
+        if len(sys.argv) < 3:
+            console.print("[red]Please provide your company URL:[/red]")
+            console.print("  python main.py discover https://yourcompany.com")
+            sys.exit(1)
+
+        company_url = sys.argv[2]
+        num_competitors = int(sys.argv[3]) if len(sys.argv) > 3 else 10
+
+        center = IntelligenceCenter()
+        center.discover(company_url, num_competitors)
+        return
+
+    # Other commands
     center = IntelligenceCenter()
 
     if command == 'scan':

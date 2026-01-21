@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block title %}Setup - Competitive Intelligence{% endblock %}
+
+{% block content %}
+<div class="card">
+    <h2>⚙️ Setup</h2>
+    <p style="margin-bottom: 30px;">Add your Claude API key to get started.</p>
+
+    <form method="POST">
+        <div class="form-group">
+            <label for="api_key">Claude API Key</label>
+            <input type="text"
+                   id="api_key"
+                   name="api_key"
+                   value="{{ config.api_keys.anthropic_api_key if config and config.api_keys.anthropic_api_key != 'PLACEHOLDER-get-from-console.anthropic.com' else '' }}"
+                   placeholder="sk-ant-api03-..."
+                   required>
+            <small style="color: #718096; display: block; margin-top: 5px;">
+                Get your free API key at <a href="https://console.anthropic.com" target="_blank" style="color: #667eea;">console.anthropic.com</a>
+            </small>
+        </div>
+
+        <button type="submit" class="btn">Save & Continue →</button>
+    </form>
+
+    <div style="margin-top: 40px; padding: 20px; background: #f7fafc; border-radius: 8px;">
+        <h3 style="margin-bottom: 15px;">📖 How to get your API key:</h3>
+        <ol style="margin-left: 20px; line-height: 2;">
+            <li>Go to <a href="https://console.anthropic.com" target="_blank" style="color: #667eea;">console.anthropic.com</a></li>
+            <li>Sign in or create a free account</li>
+            <li>Click on "API Keys" in the menu</li>
+            <li>Click "Create Key"</li>
+            <li>Copy the key and paste it above</li>
+        </ol>
+    </div>
+</div>
+{% endblock %}

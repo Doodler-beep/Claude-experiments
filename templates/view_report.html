@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block title %}{{ filename }}{% endblock %}
+
+{% block content %}
+<div class="card">
+    <h2>📄 {{ filename }}</h2>
+    <a href="{{ url_for('reports') }}" style="color: #667eea; text-decoration: none;">← Back to Reports</a>
+
+    <div style="margin-top: 30px; padding: 20px; background: #f7fafc; border-radius: 8px; white-space: pre-wrap; font-family: monospace; line-height: 1.6;">{{ content }}</div>
+</div>
+{% endblock %}

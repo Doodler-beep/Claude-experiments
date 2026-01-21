@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="card">
+    <h2>Welcome!</h2>
+
+    {% if is_configured %}
+        <p style="margin-bottom: 20px;">Your competitive intelligence system is set up and ready to go!</p>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-number">{{ config.competitors|length }}</div>
+                <div class="stat-label">Competitors Tracked</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">✓</div>
+                <div class="stat-label">API Configured</div>
+            </div>
+        </div>
+
+        <h3 style="margin-top: 30px; margin-bottom: 15px;">Quick Actions</h3>
+        <div style="display: flex; gap: 15px; flex-wrap: wrap;">
+            <a href="{{ url_for('discover') }}" class="btn">🔍 Discover More Competitors</a>
+            <a href="{{ url_for('competitors') }}" class="btn btn-secondary">📊 Manage Competitors</a>
+            <a href="{{ url_for('reports') }}" class="btn btn-secondary">📄 View Reports</a>
+        </div>
+
+        <div style="margin-top: 30px; padding: 20px; background: #f7fafc; border-radius: 8px; border-left: 4px solid #667eea;">
+            <h3 style="margin-bottom: 10px;">💡 Next Steps</h3>
+            <ol style="margin-left: 20px; line-height: 1.8;">
+                <li>Use Terminal to run your first scan: <code style="background: #e2e8f0; padding: 4px 8px; border-radius: 4px;">python main.py scan</code></li>
+                <li>Analyze detected changes: <code style="background: #e2e8f0; padding: 4px 8px; border-radius: 4px;">python main.py analyze</code></li>
+                <li>Generate weekly report: <code style="background: #e2e8f0; padding: 4px 8px; border-radius: 4px;">python main.py report</code></li>
+            </ol>
+        </div>
+
+    {% else %}
+        <p style="margin-bottom: 30px;">Let's get you set up! This will take about 5 minutes.</p>
+
+        <h3 style="margin-bottom: 15px;">Setup Steps:</h3>
+        <ol style="margin-left: 20px; margin-bottom: 30px; line-height: 2;">
+            <li><strong>Add your Claude API key</strong> (free from console.anthropic.com)</li>
+            <li><strong>Discover your competitors automatically</strong> - just enter your website URL</li>
+            <li><strong>Start tracking</strong> - the system does the rest!</li>
+        </ol>
+
+        <a href="{{ url_for('setup') }}" class="btn">🚀 Get Started</a>
+
+        <div style="margin-top: 30px; padding: 20px; background: #f7fafc; border-radius: 8px;">
+            <h4 style="margin-bottom: 10px;">What You'll Get:</h4>
+            <ul style="margin-left: 20px; line-height: 1.8;">
+                <li>Automatic competitor monitoring 24/7</li>
+                <li>AI-powered strategic analysis</li>
+                <li>Weekly intelligence briefs</li>
+                <li>Market gap identification</li>
+                <li>Real-time change alerts</li>
+            </ul>
+        </div>
+    {% endif %}
+</div>
+
+{% if is_configured and config.competitors %}
+<div class="card">
+    <h2>Currently Tracking</h2>
+    <p style="margin-bottom: 20px;">{{ config.analysis.your_product.name }} vs. Competitors</p>
+
+    <ul class="competitor-list">
+        {% for competitor in config.competitors[:5] %}
+        <li class="competitor-item">
+            <div class="competitor-info">
+                <h3>{{ competitor.name }}</h3>
+                <p>{{ competitor.urls|length }} pages monitored • Priority: <span class="badge badge-{{ competitor.priority }}">{{ competitor.priority }}</span></p>
+            </div>
+        </li>
+        {% endfor %}
+    </ul>
+
+    {% if config.competitors|length > 5 %}
+    <p style="margin-top: 15px; text-align: center;">
+        <a href="{{ url_for('competitors') }}">View all {{ config.competitors|length }} competitors →</a>
+    </p>
+    {% endif %}
+</div>
+{% endif %}
+
+{% endblock %}

@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block title %}Review Discovered Competitors{% endblock %}
+
+{% block content %}
+<div class="card">
+    <h2>✅ Review Discovered Competitors</h2>
+    <p style="margin-bottom: 20px;">We found {{ results.total_found }} competitors for <strong>{{ your_company.name }}</strong>.</p>
+
+    <div style="padding: 20px; background: #f7fafc; border-radius: 8px; margin-bottom: 30px;">
+        <h3 style="margin-bottom: 10px;">Your Company</h3>
+        <p><strong>Industry:</strong> {{ your_company.category }}</p>
+        <p style="margin-top: 5px;">{{ your_company.description }}</p>
+    </div>
+
+    <form method="POST" action="{{ url_for('save_competitors') }}">
+        <input type="hidden" name="company_name" value="{{ your_company.name }}">
+        <input type="hidden" name="company_category" value="{{ your_company.category }}">
+        <input type="hidden" name="company_description" value="{{ your_company.description }}">
+        <input type="hidden" name="competitors_data" value="{{ results.competitors | tojson }}">
+
+        <h3 style="margin-bottom: 15px;">Select Competitors to Track:</h3>
+        <p style="margin-bottom: 20px; color: #718096;">Choose which competitors you want to monitor</p>
+
+        {% for competitor in results.competitors %}
+        <div class="checkbox-item">
+            <input type="checkbox"
+                   name="selected_competitors"
+                   value="{{ competitor.name }}"
+                   id="comp_{{ loop.index }}"
+                   {% if loop.index <= 5 %}checked{% endif %}>
+            <label for="comp_{{ loop.index }}" style="flex: 1; cursor: pointer;">
+                <div>
+                    <h3>{{ competitor.name }} <span class="badge badge-{{ competitor.priority }}">{{ competitor.priority }}</span></h3>
+                    <p style="margin-top: 5px; color: #718096;">{{ competitor.why_competitor }}</p>
+                    <p style="margin-top: 5px; color: #718096; font-size: 13px;"><strong>How they differ:</strong> {{ competitor.differentiation }}</p>
+                    <p style="margin-top: 5px; color: #667eea; font-size: 13px;">{{ competitor.urls|length }} pages will be monitored</p>
+                </div>
+            </label>
+        </div>
+        {% endfor %}
+
+        <div style="margin-top: 30px; display: flex; gap: 15px;">
+            <button type="submit" class="btn">✓ Save & Start Tracking</button>
+            <a href="{{ url_for('discover') }}" class="btn btn-secondary">← Start Over</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

@@ -1,144 +1,143 @@
 # Competitive Intelligence Command Center
 
-**Stop manually tracking competitors. Let AI do it for you.**
+**AI-powered competitive intelligence automation for teams and businesses.**
 
-Built by a product marketer who got tired of spending 10+ hours a week checking competitor websites.
+An open-source tool that monitors competitors 24/7, detects changes automatically, and generates strategic insights using Claude AI.
 
 ## What It Does
 
-- 🔍 **Monitors** competitor websites, pricing, features, and messaging 24/7
-- 🎯 **Detects** changes automatically and tracks them over time
-- 🧠 **Analyzes** competitive moves using Claude AI to find strategic opportunities
-- 📊 **Generates** weekly strategic briefs with actionable insights
-- 💡 **Identifies** market whitespace and positioning gaps
-- ⚡ **Alerts** you to critical changes before your sales team finds out the hard way
+- 🔍 **Monitors** competitor websites, pricing, features, and messaging automatically
+- 🎯 **Detects** changes in real-time and tracks them over time
+- 🧠 **Analyzes** competitive moves using Claude AI to identify strategic opportunities
+- 📊 **Generates** weekly intelligence briefs with actionable insights
+- 💡 **Identifies** market gaps and positioning opportunities
+- ⚡ **Alerts** teams to critical changes before they impact deals
 
 ## Why This Exists
 
-As a product marketer, you know the pain:
-- Manually checking competitor sites weekly
-- Screenshotting pricing pages to compare later
-- Missing critical updates until a deal is lost
-- Spending hours creating competitive analysis decks
-- No historical data on competitor evolution
+Competitive intelligence is critical but time-consuming. Most teams either:
+- Manually check competitor sites sporadically
+- Miss important updates until it's too late
+- Lack historical data for trend analysis
+- Spend hours creating competitive analysis reports
 
-**This solves all of that. Automatically.**
+This tool automates the entire competitive intelligence workflow, from data collection to strategic analysis.
 
-## ✨ NEW: Web UI + Auto-Discovery
+## ✨ Features
 
-**Two major features just added:**
-
-### 1. 🌐 Web UI (Point-and-Click Interface)
-No more editing config files! Manage everything in your browser.
+### 🌐 Web UI
+Point-and-click interface for easy management. No coding required.
 
 ```bash
-python main.py web
-# Opens at http://localhost:5000
+python src/web_ui.py
+# Opens at http://localhost:8000
 ```
 
-Features:
-- Set up API key through web form
+- Set up API keys through web forms
 - Add/remove competitors with clicks
-- View reports in browser
-- Check system status
-- **Perfect for non-technical users!**
+- View reports in your browser
+- Check system status and metrics
 
-### 2. 🔍 Automatic Competitor Discovery
-Just enter your URL - AI finds your competitors automatically!
+### 🔍 Automatic Competitor Discovery
+AI-powered competitor discovery - just enter your company URL.
 
 ```bash
 python main.py discover https://yourcompany.com
-# Or use the Web UI for a better experience
+# Or use the Web UI for better experience
 ```
+
+The system analyzes your website and automatically finds relevant competitors in your market.
+
+### 📊 Intelligent Analysis
+Claude AI generates strategic insights from raw data:
+- Impact assessment of competitor changes
+- Market gap identification
+- Positioning recommendations
+- Prioritized action items
 
 ---
 
 ## Quick Start
 
-### 🍎 New to This? Start Here!
-
-**Want the easiest experience? (Recommended)**
-👉 **[WEB_UI_GUIDE.md](WEB_UI_GUIDE.md)** - Point-and-click interface guide
-
-**Prefer Terminal?**
-👉 **[START_HERE_MACBOOK.md](START_HERE_MACBOOK.md)** - Terminal-based walkthrough
-
-**Want a quick reference?**
-👉 **[CHEAT_SHEET.md](CHEAT_SHEET.md)** - All commands on one page
-
-### ⚡ Quick Setup (Web UI Method)
+### Installation
 
 ```bash
-# 1. Install (one-time)
+# 1. Clone the repository
+git clone https://github.com/yourusername/claude-experiments.git
+cd claude-experiments
+
+# 2. Run setup script
 ./setup.sh
 
-# 2. Start Web UI
+# 3. Activate virtual environment
 source venv/bin/activate
-python main.py web
 
-# 3. Open browser to http://localhost:5000
-# 4. Follow the setup wizard!
+# 4. Start the web interface
+python src/web_ui.py
 ```
 
-## Real-World Impact
+### Configuration
 
-**Time Savings:**
-- Before: 10+ hours/week manually tracking competitors
-- After: 10 minutes/week reviewing automated insights
-- **Savings: ~40 hours/month**
+1. Get a Claude API key from [console.anthropic.com](https://console.anthropic.com)
+2. Open http://localhost:8000 in your browser
+3. Enter your API key in the setup page
+4. Use auto-discovery or manually add competitors
 
-**Business Value:**
-- Detected competitor price changes before sales team
-- Identified $XX market opportunity through gap analysis
-- Automated weekly strategic briefs
-- Historical competitive data for trend analysis
+### First Scan
+
+```bash
+# Run your first competitive scan
+python main.py scan
+
+# Analyze detected changes
+python main.py analyze
+
+# Generate intelligence report
+python main.py report
+```
 
 ## Use Cases
 
-### 1. Product Marketing
-Stay ahead of competitor launches, messaging shifts, and positioning changes.
+### Product & Marketing Teams
+- Stay ahead of competitor launches and messaging shifts
+- Track feature releases and positioning changes
+- Identify market gaps and opportunities
 
-### 2. Sales Enablement
-Real-time alerts when competitors change pricing or features. Auto-updated battle cards.
+### Sales Enablement
+- Real-time alerts on competitor pricing changes
+- Auto-updated competitive battle cards
+- Strategic context for competitive deals
 
-### 3. Strategic Planning
-Identify market gaps, positioning opportunities, and whitespace.
+### Strategic Planning
+- Historical competitive data for trend analysis
+- Market gap identification
+- Positioning opportunity discovery
 
-### 4. Competitive Consulting
-Sell intelligence reports to companies for $2K-$10K/month ([see monetization guide](MONETIZATION.md))
-
-### 5. Portfolio/Career
-Showcase strategic thinking + technical execution in interviews.
-
-## Documentation
-
-**Getting Started (Pick Your Style):**
-- **[WEB_UI_GUIDE.md](WEB_UI_GUIDE.md)** - 🌐 Web interface guide (easiest, recommended for beginners)
-- **[START_HERE_MACBOOK.md](START_HERE_MACBOOK.md)** - 💻 Terminal walkthrough for MacBook users
-- **[CHEAT_SHEET.md](CHEAT_SHEET.md)** - ⚡ Quick command reference
-- **[QUICKSTART.md](QUICKSTART.md)** - 📖 Detailed usage guide and examples
-
-**Advanced Guides:**
-- **[MONETIZATION.md](MONETIZATION.md)** - 💰 Turn this into revenue ($90K-$600K+/year)
-- **[SHOWCASE.md](SHOWCASE.md)** - 🎯 Use this to advance your career
+### Consulting & Services
+- Deliver competitive intelligence reports to clients
+- Strategic consulting backed by data
+- Market analysis for portfolio companies
 
 ## Architecture
 
 ```
 src/
-├── competitor_tracker.py    # Web scraping and data collection
-├── change_detector.py       # Change detection and tracking
-└── ai_analyst.py           # Claude-powered strategic analysis
+├── web_ui.py               # Flask web interface
+├── competitor_discovery.py # AI-powered competitor finding
+├── competitor_tracker.py   # Web scraping and data collection
+├── change_detector.py      # Change detection and tracking
+└── ai_analyst.py          # Claude-powered strategic analysis
 
-main.py                     # CLI interface
-config.json                 # Your competitors and settings
-data/intelligence.db        # SQLite database with history
-reports/                    # Generated intelligence briefs
+main.py                    # CLI interface
+config.json               # Competitors and settings
+data/intelligence.db      # SQLite change tracking database
+reports/                  # Generated intelligence briefs
+templates/                # Web UI templates
 ```
 
 ## Example Outputs
 
-**Real-time Alert:**
+### Real-time Alert
 ```
 🚨 COMPETITIVE ALERT - CRITICAL
 
@@ -154,129 +153,100 @@ Strategic Impact: Opportunity to position on pricing AND analytics access.
 Recommended Actions:
 - Update battle cards within 24h
 - Create pricing comparison page
-- Reach out to Notion prospects evaluating both tools
+- Target Notion prospects evaluating alternatives
 
 Threat Level: LOW (change benefits your positioning)
 ```
 
-**Weekly Intelligence Brief:**
+### Weekly Intelligence Brief
 ```markdown
 # Competitive Intelligence Brief
-Generated: January 21, 2026
+Generated: January 24, 2026
 
 ## Executive Summary
-4 significant changes this week. Notion restructured pricing (opportunity).
-Coda expanded integrations (monitor). Market trending toward AI features.
+4 significant changes detected this week. Notion restructured pricing
+(opportunity). Coda expanded integrations (monitor). Market trending
+toward AI-first features.
 
 ## Critical Developments
 1. Notion 39% Enterprise price increase - creates pricing gap
-2. All competitors now offer AI tier - table stakes
+2. Industry-wide shift to AI-powered features as standard
 
 ## Strategic Opportunities
-- Price aggressively in $15-20/user range (gap between competitors)
-- Position AI as "included" vs. "upsell"
-- Target Notion customers impacted by price increase
+- Price competitively in $15-20/user range (gap in market)
+- Position AI features as "included" vs competitor "add-on" model
+- Target Notion customers affected by price increase
 
 ## Recommended Actions
-[Prioritized list of specific actions to take this week]
+[Prioritized list of specific actions]
 ```
-
-**Market Gap Analysis:**
-```json
-{
-  "whitespace_opportunities": [
-    {
-      "opportunity": "Small team pricing (2-5 users)",
-      "rationale": "All competitors jump from $10 to $20/user. $50-75 total unserved.",
-      "priority": "high"
-    }
-  ],
-  "strategic_recommendations": [
-    "Launch $15/user tier for small teams",
-    "Position as AI-native vs. AI-bolted-on"
-  ]
-}
-```
-
-## What Makes This Different
-
-**vs. Manual Tracking:**
-- Automated vs. manual
-- Consistent vs. sporadic
-- Historical data vs. point-in-time
-- AI insights vs. raw data
-
-**vs. Enterprise Tools (Crayon, Klue):**
-- Free vs. $$$$$
-- Open source vs. proprietary
-- Customizable vs. fixed
-- You own the data vs. SaaS
-
-**vs. Other Solutions:**
-- Strategic analysis (AI-powered)
-- Built for product marketers by a product marketer
-- Monetization-ready out of the box
 
 ## Tech Stack
 
 - **Python 3.8+** - Core language
-- **Claude API** - AI strategic analysis
+- **Claude API** - AI-powered strategic analysis
+- **Flask** - Web interface
 - **BeautifulSoup** - Web scraping
-- **Playwright** - JavaScript-heavy sites
 - **SQLite** - Change tracking database
-- **Rich** - Beautiful CLI output
+- **Playwright** - JavaScript-heavy sites
 
-## Getting Started
+## Documentation
 
-```bash
-# 1. Setup (5 minutes)
-./setup.sh
+- **[QUICKSTART.md](QUICKSTART.md)** - Detailed usage guide
+- **[WEB_UI_GUIDE.md](WEB_UI_GUIDE.md)** - Web interface walkthrough
+- **[CHEAT_SHEET.md](CHEAT_SHEET.md)** - Quick command reference
 
-# 2. Configure (2 minutes)
-# Edit config.json with your API key and competitors
+## What Makes This Different
 
-# 3. Run (1 minute)
-python main.py scan
-python main.py analyze
-python main.py report
-```
+**vs. Manual Tracking:**
+- Automated vs. manual spot-checks
+- Consistent vs. sporadic monitoring
+- Historical data vs. point-in-time snapshots
+- AI insights vs. raw data collection
 
-**[Full quickstart guide →](QUICKSTART.md)**
+**vs. Enterprise Tools (Crayon, Klue, etc.):**
+- Open source vs. proprietary
+- Free vs. $$$$$
+- Customizable vs. fixed features
+- Self-hosted - you own your data
 
-## Monetization
+**vs. Simple Web Scrapers:**
+- Strategic analysis, not just change detection
+- AI-powered insights and recommendations
+- Built-in intelligence reporting
+- Automatic competitor discovery
 
-This isn't just a tool - it's a **business opportunity**.
+## Business Applications
 
-- Sell intelligence reports: $2K-$10K/month per client
-- Strategic consulting: $10K-$25K per engagement
-- Use internally: Win deals, save dev time, increase prices strategically
+### Internal Use
+- Launch better products (know what NOT to build)
+- Win competitive deals (real-time intelligence)
+- Price strategically (see moves before customers do)
+- Identify market gaps and opportunities
 
-**[Full monetization playbook →](MONETIZATION.md)**
-
-## Showcase & Portfolio
-
-Use this project to:
-- Stand out in product marketing interviews
-- Land roles at $150K-$250K+
-- Demonstrate strategic + technical capability
-- Build credibility on LinkedIn
-
-**[Full showcase guide →](SHOWCASE.md)**
+### Service Business
+- Deliver competitive intelligence reports to clients
+- Strategic consulting backed by automated data
+- Market analysis for agencies or investors
+- Ongoing intelligence subscription service
 
 ## Contributing
 
-Found a bug? Have an improvement?
-- Open an issue
-- Submit a PR
-- Share your use case
+Contributions welcome! Areas for improvement:
+- Additional data sources
+- More analysis capabilities
+- Enhanced reporting formats
+- Integration with other tools
+
+Open an issue or submit a PR.
 
 ## License
 
-MIT License - Use it, modify it, sell it, whatever you want.
+MIT License - Free to use, modify, and distribute.
 
 ## Credits
 
-Built by a product marketer who believes marketers should be **builders**, not just content creators.
+Built to solve the problem of manual competitive tracking. Open sourced to help teams compete more effectively.
 
 ---
 

@@ -379,7 +379,7 @@ source venv/bin/activate
 3. ✅ Set up daily automation
 4. 📖 Read [MONETIZATION.md](MONETIZATION.md) to turn this into revenue
 5. 🚀 Share insights with your team
-6. 💼 Use for your next interview/portfolio
+6. 💡 Customize reports for your specific needs
 
 ---
 

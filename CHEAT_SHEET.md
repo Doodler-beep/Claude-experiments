@@ -177,7 +177,7 @@ python main.py gaps
 ✅ Catch pricing changes before your sales team
 ✅ Weekly strategic briefs automatically
 ✅ Market gap analysis on demand
-✅ Portfolio piece for your next interview
+✅ Real-time competitive alerts
 ✅ Potential consulting revenue ($2K-$10K/month)
 
 ---

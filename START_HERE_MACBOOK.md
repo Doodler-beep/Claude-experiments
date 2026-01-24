@@ -400,7 +400,7 @@ You now have a competitive intelligence system that:
 ✅ Generates weekly intelligence reports
 ✅ Identifies market opportunities
 
-**This is legit impressive.** Most product marketers don't have this.
+**You now have a professional competitive intelligence system.**
 
 ---
 
@@ -419,6 +419,6 @@ You now have a competitive intelligence system that:
 **Questions?** All the docs are in the project folder:
 - `QUICKSTART.md` - More detailed usage guide
 - `MONETIZATION.md` - How to make money from this
-- `SHOWCASE.md` - How to use this for your career
+- `WEB_UI_GUIDE.md` - Using the web interface
 
 **Pro tip:** Bookmark this guide. You'll reference it until the commands become muscle memory.

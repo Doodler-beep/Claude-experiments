@@ -3,7 +3,7 @@ Web UI for Competitive Intelligence Command Center
 Simple interface for non-technical users
 """
 
-from flask import Flask, render_template, request, redirect, url_for, flash, jsonify
+from flask import Flask, render_template, request, redirect, url_for, flash, jsonify, session
 import json
 import os
 from pathlib import Path
@@ -127,8 +127,8 @@ def discover():
             discovery = CompetitorDiscovery(config['api_keys']['anthropic_api_key'])
             results = discovery.run_discovery(company_url, num_competitors)
 
-            # Update config
-            config['analysis']['your_product'] = results['your_company']
+            # Store in session for later retrieval
+            session['discovery_results'] = results
 
             # Store discovered competitors for review
             # Don't auto-save to config yet - let user review first
@@ -148,6 +148,13 @@ def save_competitors():
     """Save selected competitors to config"""
     config = load_config()
 
+    # Get discovery results from session
+    discovery_results = session.get('discovery_results')
+
+    if not discovery_results:
+        flash('Session expired. Please discover competitors again.', 'error')
+        return redirect(url_for('discover'))
+
     # Get form data
     company_name = request.form.get('company_name')
     company_category = request.form.get('company_category')
@@ -160,16 +167,8 @@ def save_competitors():
         flash('Please select at least one competitor', 'error')
         return redirect(url_for('discover'))
 
-    # Parse competitor data from hidden field - with error handling
-    try:
-        competitors_data_raw = request.form.get('competitors_data')
-        # Handle HTML-escaped JSON
-        import html
-        competitors_data_unescaped = html.unescape(competitors_data_raw)
-        competitors_data = json.loads(competitors_data_unescaped)
-    except (json.JSONDecodeError, TypeError, AttributeError) as e:
-        flash(f'Error processing competitor data. Please try discovering again.', 'error')
-        return redirect(url_for('discover'))
+    # Get competitors data from session
+    competitors_data = discovery_results.get('competitors', [])
 
     # Filter to selected only
     filtered_competitors = [

@@ -129,6 +129,9 @@ def discover():
 
             # Store in session for later retrieval
             session['discovery_results'] = results
+            session.modified = True  # Ensure Flask knows session changed
+
+            print(f"✅ DEBUG: Stored {len(results.get('competitors', []))} competitors in session")
 
             # Store discovered competitors for review
             # Don't auto-save to config yet - let user review first
@@ -151,7 +154,12 @@ def save_competitors():
     # Get discovery results from session
     discovery_results = session.get('discovery_results')
 
+    # Debug output
+    print(f"🔍 DEBUG: discovery_results in session: {discovery_results is not None}")
+    print(f"🔍 DEBUG: Form data keys: {list(request.form.keys())}")
+
     if not discovery_results:
+        print("❌ DEBUG: No discovery results in session!")
         flash('Session expired. Please discover competitors again.', 'error')
         return redirect(url_for('discover'))
 
@@ -163,7 +171,11 @@ def save_competitors():
     # Get selected competitors
     selected_competitors = request.form.getlist('selected_competitors')
 
+    print(f"🔍 DEBUG: Selected competitors: {selected_competitors}")
+    print(f"🔍 DEBUG: Number selected: {len(selected_competitors)}")
+
     if not selected_competitors:
+        print("❌ DEBUG: No competitors selected!")
         flash('Please select at least one competitor', 'error')
         return redirect(url_for('discover'))
 

@@ -160,8 +160,16 @@ def save_competitors():
         flash('Please select at least one competitor', 'error')
         return redirect(url_for('discover'))
 
-    # Parse competitor data from hidden field
-    competitors_data = json.loads(request.form.get('competitors_data'))
+    # Parse competitor data from hidden field - with error handling
+    try:
+        competitors_data_raw = request.form.get('competitors_data')
+        # Handle HTML-escaped JSON
+        import html
+        competitors_data_unescaped = html.unescape(competitors_data_raw)
+        competitors_data = json.loads(competitors_data_unescaped)
+    except (json.JSONDecodeError, TypeError, AttributeError) as e:
+        flash(f'Error processing competitor data. Please try discovering again.', 'error')
+        return redirect(url_for('discover'))
 
     # Filter to selected only
     filtered_competitors = [

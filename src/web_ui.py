@@ -98,7 +98,7 @@ def setup():
         config['api_keys']['anthropic_api_key'] = api_key
         save_config(config)
 
-        flash('API key saved! Now let\'s discover your competitors.', 'success')
+        flash('API key saved! Now lets discover your competitors.', 'success')
         return redirect(url_for('discover'))
 
     config = load_config()

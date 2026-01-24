@@ -127,11 +127,13 @@ def discover():
             discovery = CompetitorDiscovery(config['api_keys']['anthropic_api_key'])
             results = discovery.run_discovery(company_url, num_competitors)
 
-            # Store in session for later retrieval
-            session['discovery_results'] = results
-            session.modified = True  # Ensure Flask knows session changed
+            # Store results in a temporary file (more reliable than session)
+            temp_file = Path('data/discovery_temp.json')
+            temp_file.parent.mkdir(exist_ok=True)
+            with open(temp_file, 'w') as f:
+                json.dump(results, f, indent=2)
 
-            print(f"✅ DEBUG: Stored {len(results.get('competitors', []))} competitors in session")
+            print(f"✅ DEBUG: Stored {len(results.get('competitors', []))} competitors in temp file")
 
             # Store discovered competitors for review
             # Don't auto-save to config yet - let user review first
@@ -151,16 +153,25 @@ def save_competitors():
     """Save selected competitors to config"""
     config = load_config()
 
-    # Get discovery results from session
-    discovery_results = session.get('discovery_results')
+    # Get discovery results from temp file
+    temp_file = Path('data/discovery_temp.json')
+    discovery_results = None
+
+    if temp_file.exists():
+        try:
+            with open(temp_file, 'r') as f:
+                discovery_results = json.load(f)
+            print(f"✅ DEBUG: Loaded discovery results from temp file")
+        except Exception as e:
+            print(f"❌ DEBUG: Error loading temp file: {e}")
 
     # Debug output
-    print(f"🔍 DEBUG: discovery_results in session: {discovery_results is not None}")
+    print(f"🔍 DEBUG: discovery_results found: {discovery_results is not None}")
     print(f"🔍 DEBUG: Form data keys: {list(request.form.keys())}")
 
     if not discovery_results:
-        print("❌ DEBUG: No discovery results in session!")
-        flash('Session expired. Please discover competitors again.', 'error')
+        print("❌ DEBUG: No discovery results found!")
+        flash('Discovery data expired. Please discover competitors again.', 'error')
         return redirect(url_for('discover'))
 
     # Get form data
@@ -179,7 +190,7 @@ def save_competitors():
         flash('Please select at least one competitor', 'error')
         return redirect(url_for('discover'))
 
-    # Get competitors data from session
+    # Get competitors data from discovery results
     competitors_data = discovery_results.get('competitors', [])
 
     # Filter to selected only
@@ -206,6 +217,13 @@ def save_competitors():
     ]
 
     save_config(config)
+
+    # Clean up temp file
+    try:
+        temp_file.unlink()
+        print("✅ DEBUG: Cleaned up temp file")
+    except:
+        pass
 
     flash(f'Successfully added {len(filtered_competitors)} competitors!', 'success')
     return redirect(url_for('competitors'))

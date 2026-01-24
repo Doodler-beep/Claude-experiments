@@ -33,7 +33,7 @@ pip install flask anthropic requests beautifulsoup4 trafilatura python-magic
 python src/web_ui.py
 ```
 
-The server will start at `http://localhost:5000` (or `http://localhost:8000` if port 5000 is in use).
+The server will start at `http://localhost:8000`.
 
 ### Step 3: Initial Setup
 1. Open the URL in your browser
@@ -152,12 +152,6 @@ After setup, your config will look like:
 
 ## Troubleshooting
 
-### Port Already in Use
-If port 5000 is blocked (common on Mac with ControlCenter):
-1. Edit `src/web_ui.py`
-2. Change line 385: `app.run(host=host, port=8000, debug=debug)`
-3. Use `http://localhost:8000` instead
-
 ### Module Not Found Errors
 Install missing dependencies:
 ```bash
@@ -179,7 +173,7 @@ mkdir -p data reports
 
 ## Next Steps
 
-1. **Start the Web UI**: `python src/web_ui.py`
+1. **Start the Web UI**: `python src/web_ui.py` (opens at http://localhost:8000)
 2. **Complete Setup**: Add your Claude API key
 3. **Discover Competitors**: Let AI find your competition automatically
 4. **Run First Scan**: `python src/competitive_intelligence.py`

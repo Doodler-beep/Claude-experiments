@@ -8,7 +8,7 @@
 
 ### A Lesson from Ryanair
 
-Years ago, while working on a Harvard MBA case study about Ryanair with professors from UCLA, something clicked. Ryanair—the ultra-low-cost airline that became Europe's largest carrier with a market cap of ₹2.833 trillion in 2025—didn't just execute a plan. They executed a **strategy**.
+Years ago, while working on a Harvard MBA case study about Ryanair, something clicked. Ryanair—the ultra-low-cost airline that became Europe's largest carrier with a market cap of ₹2.833 trillion in 2025—didn't just execute a plan. They executed a **strategy**.
 
 The difference? A plan is internal. A strategy is about playing to win by understanding your market and your competition.
 

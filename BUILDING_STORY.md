@@ -1,6 +1,6 @@
-# How I Built a Competitive Intelligence Command Center Over a Weekend with Claude Code
+# How I Built a Competitive Intelligence Command Center with Claude Code
 
-**The messy, real story of building a production system with AI assistance**
+**The messy, real story of building a production system with AI assistance — started on a weekend, refined over the week, showcased the next weekend**
 
 ---
 
@@ -363,7 +363,9 @@ Where did the extra 1,000 lines go?
 - Friday night: 2 hours (exploration on phone)
 - Saturday: 8 hours (building + debugging)
 - Sunday: 4 hours (testing + polish)
-- **Total: ~14 hours over 3 days**
+- Following week: pockets of time refining, fixing edge cases, improving UX
+- Next weekend: building the showcase and polishing for public
+- **Core build: ~14 hours over the first weekend, plus ongoing refinement**
 
 **Bugs Fixed:**
 - Syntax errors: 12+
@@ -512,7 +514,7 @@ python src/web_ui.py
 "I built a competitive intelligence system in one caffeinated all-nighter!"
 
 **The Real Version:**
-"I spent a weekend debugging syntax errors, fighting file corruption, fixing JSON parsing issues, and nearly quitting three times. But I persisted, learned a ton, and built something genuinely useful."
+"The core was built over a weekend — debugging syntax errors, fighting file corruption, fixing JSON parsing issues, and nearly quitting three times. Then I spent the following week refining it in pockets of spare time. And the weekend after, I built the showcase to share the thinking behind it. It wasn't one heroic session. It was persistence across days and weeks."
 
 **Which story is better?**
 
@@ -596,7 +598,7 @@ And that's what matters.
 
 ---
 
-*Built over a weekend with Claude Code, debugging, persistence, and way too much coffee.*
+*Started over a weekend with Claude Code. Refined during the week. Showcased the next weekend. Built with debugging, persistence, and way too much coffee.*
 
 *Open sourced because competitive intelligence shouldn't cost $50K/year.*
 

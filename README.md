@@ -2,6 +2,8 @@
 
 **AI-powered competitive intelligence automation for teams and businesses.**
 
+Built by a product marketer (not a software engineer) using Claude Code as a pair programmer. The idea started late on a Friday night, the core system was built over a weekend, refined during the week in pockets of spare time, and is now being showcased the following weekend. [Read the full building story](BUILDING_STORY.md) or [view the interactive showcase](templates/showcase.html).
+
 An open-source tool that monitors competitors 24/7, detects changes automatically, and generates strategic insights using Claude AI.
 
 ## What It Does
@@ -63,8 +65,8 @@ Claude AI generates strategic insights from raw data:
 
 ```bash
 # 1. Clone the repository
-git clone https://github.com/yourusername/claude-experiments.git
-cd claude-experiments
+git clone https://github.com/Doodler-beep/Claude-experiments.git
+cd Claude-experiments
 
 # 2. Run setup script
 ./setup.sh
@@ -244,9 +246,20 @@ Open an issue or submit a PR.
 
 MIT License - Free to use, modify, and distribute.
 
+## The Story Behind This
+
+I'm a product marketer. I don't write code professionally. But I understand competitive intelligence deeply — the hours spent manually checking competitor sites, the screenshots that go stale, the reports that take longer to write than they stay relevant.
+
+The idea started on a Friday night scrolling LinkedIn. The core system was built over a weekend with Claude Code. The week after, I refined it in pockets of spare time — fixing edge cases, improving error handling, polishing the UX. Now I'm showcasing the builder thinking behind it.
+
+- **[Building Story](BUILDING_STORY.md)** — The messy, real story: 12+ syntax errors, 3 file corruptions, 7 failed JSON fixes, and the persistence to ship anyway
+- **[Interactive Showcase](templates/showcase.html)** — A visual board walking through problem, product thinking, system design, what broke, and what I learned
+
+**Domain expertise + AI assistance = powerful combination.** You don't need to be a software engineer to build something useful.
+
 ## Credits
 
-Built to solve the problem of manual competitive tracking. Open sourced to help teams compete more effectively.
+Built by [Abhishek](https://github.com/Doodler-beep) — a product marketer who wanted a system that thinks before the market shifts, not after. Open sourced because competitive intelligence shouldn't cost $50K/year.
 
 ---
 

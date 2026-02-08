@@ -333,6 +333,12 @@ def view_report(filename):
                          content=content)
 
 
+@app.route('/showcase')
+def showcase():
+    """Builder showcase - the thinking behind the Command Center"""
+    return render_template('showcase.html')
+
+
 @app.route('/status')
 def status():
     """Show system status"""

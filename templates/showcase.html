@@ -1,0 +1,1059 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Command Center — Builder Showcase</title>
+    <style>
+        /* ── Reset & Base ─────────────────────────────── */
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg: #f8f8f7;
+            --surface: #ffffff;
+            --surface-hover: #fafafa;
+            --border: #e8e5e1;
+            --border-light: #f0eeeb;
+            --text: #37352f;
+            --text-secondary: #787774;
+            --text-tertiary: #b4b0ab;
+            --accent: #37352f;
+            --accent-light: #f1f1ef;
+            --purple: #6c5ce7;
+            --purple-light: #f3f0ff;
+            --blue: #4a90d9;
+            --blue-light: #e8f0fe;
+            --green: #27ae60;
+            --green-light: #e8f8ef;
+            --orange: #e67e22;
+            --orange-light: #fef5e7;
+            --red: #e74c3c;
+            --red-light: #fdf0ef;
+            --column-gap: 20px;
+            --card-radius: 8px;
+            --font: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', sans-serif;
+            --font-mono: 'SF Mono', 'Fira Code', 'Fira Mono', 'Roboto Mono', monospace;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font);
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* ── Top Bar ──────────────────────────────────── */
+        .topbar {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+            padding: 12px 32px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .topbar-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .topbar-icon {
+            width: 28px;
+            height: 28px;
+            background: var(--accent);
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .topbar-icon svg {
+            width: 16px;
+            height: 16px;
+            fill: white;
+        }
+
+        .topbar h1 {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text);
+            letter-spacing: -0.01em;
+        }
+
+        .topbar-breadcrumb {
+            color: var(--text-tertiary);
+            font-size: 14px;
+        }
+
+        .topbar-right {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .topbar-link {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 500;
+            padding: 6px 12px;
+            border-radius: 6px;
+            transition: background 0.15s, color 0.15s;
+        }
+
+        .topbar-link:hover {
+            background: var(--accent-light);
+            color: var(--text);
+        }
+
+        /* ── Hero ─────────────────────────────────────── */
+        .hero {
+            max-width: 760px;
+            margin: 0 auto;
+            padding: 64px 32px 48px;
+            text-align: center;
+        }
+
+        .hero-label {
+            display: inline-block;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--text-secondary);
+            background: var(--accent-light);
+            padding: 4px 12px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+        }
+
+        .hero h2 {
+            font-size: 36px;
+            font-weight: 700;
+            letter-spacing: -0.025em;
+            line-height: 1.2;
+            margin-bottom: 12px;
+            color: var(--text);
+        }
+
+        .hero p {
+            font-size: 16px;
+            color: var(--text-secondary);
+            max-width: 520px;
+            margin: 0 auto;
+            line-height: 1.65;
+        }
+
+        /* ── Phase Flow (horizontal navigation) ───────── */
+        .phase-nav {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+            padding: 0 32px 40px;
+            flex-wrap: wrap;
+        }
+
+        .phase-pill {
+            font-size: 13px;
+            font-weight: 500;
+            padding: 7px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+            color: var(--text-secondary);
+            background: transparent;
+            border: 1px solid transparent;
+            text-decoration: none;
+            white-space: nowrap;
+        }
+
+        .phase-pill:hover {
+            background: var(--surface);
+            border-color: var(--border);
+            color: var(--text);
+        }
+
+        .phase-pill.active {
+            background: var(--surface);
+            border-color: var(--border);
+            color: var(--text);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+        }
+
+        .phase-arrow {
+            color: var(--text-tertiary);
+            font-size: 14px;
+            user-select: none;
+        }
+
+        /* ── Board Container ──────────────────────────── */
+        .board-scroll {
+            overflow-x: auto;
+            padding: 0 32px 40px;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: thin;
+            scrollbar-color: var(--border) transparent;
+        }
+
+        .board-scroll::-webkit-scrollbar {
+            height: 6px;
+        }
+
+        .board-scroll::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .board-scroll::-webkit-scrollbar-thumb {
+            background: var(--border);
+            border-radius: 3px;
+        }
+
+        .board {
+            display: flex;
+            gap: var(--column-gap);
+            min-width: min-content;
+            padding-bottom: 8px;
+        }
+
+        /* ── Column ───────────────────────────────────── */
+        .column {
+            width: 340px;
+            min-width: 340px;
+            flex-shrink: 0;
+        }
+
+        .column-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 4px 14px;
+            position: sticky;
+            top: 57px;
+            background: var(--bg);
+            z-index: 10;
+        }
+
+        .column-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+
+        .column-header h3 {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+        }
+
+        .column-count {
+            font-size: 12px;
+            color: var(--text-tertiary);
+            margin-left: auto;
+        }
+
+        .column-cards {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        /* ── Card ─────────────────────────────────────── */
+        .card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--card-radius);
+            padding: 16px 18px;
+            transition: box-shadow 0.2s, border-color 0.2s;
+            cursor: default;
+        }
+
+        .card:hover {
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+            border-color: #ddd9d4;
+        }
+
+        .card-label {
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            margin-bottom: 10px;
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 3px;
+        }
+
+        .card h4 {
+            font-size: 15px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            letter-spacing: -0.01em;
+            line-height: 1.35;
+        }
+
+        .card p {
+            font-size: 14px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        .card ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .card ul li {
+            font-size: 14px;
+            color: var(--text-secondary);
+            padding: 5px 0;
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+            line-height: 1.5;
+        }
+
+        .card ul li::before {
+            content: '';
+            width: 5px;
+            height: 5px;
+            background: var(--text-tertiary);
+            border-radius: 50%;
+            flex-shrink: 0;
+            margin-top: 8px;
+        }
+
+        /* ── Card Variants ────────────────────────────── */
+        .card-quote {
+            border-left: 3px solid var(--text-tertiary);
+            padding-left: 16px;
+            font-style: italic;
+        }
+
+        .card-quote p {
+            font-size: 14px;
+            color: var(--text);
+            line-height: 1.65;
+        }
+
+        .card-highlight {
+            background: linear-gradient(135deg, #fafaf9 0%, #f5f4f2 100%);
+            border: 1px solid var(--border);
+        }
+
+        .card-callout {
+            border: 1px dashed var(--border);
+            background: var(--surface);
+        }
+
+        /* ── Architecture Diagram ─────────────────────── */
+        .arch-flow {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0;
+            padding: 8px 0;
+        }
+
+        .arch-node {
+            background: var(--accent-light);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 8px 16px;
+            font-size: 13px;
+            font-weight: 500;
+            text-align: center;
+            width: 100%;
+            color: var(--text);
+        }
+
+        .arch-node.primary {
+            background: var(--text);
+            color: white;
+            border-color: var(--text);
+        }
+
+        .arch-arrow {
+            color: var(--text-tertiary);
+            font-size: 16px;
+            line-height: 1;
+            padding: 4px 0;
+        }
+
+        .arch-row {
+            display: flex;
+            gap: 8px;
+            width: 100%;
+        }
+
+        .arch-row .arch-node {
+            flex: 1;
+        }
+
+        /* ── Code Block ───────────────────────────────── */
+        .code-block {
+            background: #2d2d2d;
+            color: #ccc;
+            border-radius: 6px;
+            padding: 14px 16px;
+            font-family: var(--font-mono);
+            font-size: 12px;
+            line-height: 1.6;
+            overflow-x: auto;
+            margin-top: 8px;
+        }
+
+        .code-block .err { color: #e74c3c; }
+        .code-block .ok { color: #27ae60; }
+        .code-block .dim { color: #888; }
+        .code-block .warn { color: #e67e22; }
+
+        /* ── Timeline ─────────────────────────────────── */
+        .timeline {
+            padding: 4px 0;
+        }
+
+        .timeline-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 8px 0;
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+
+        .timeline-icon {
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            font-size: 11px;
+            margin-top: 1px;
+        }
+
+        .timeline-icon.error {
+            background: var(--red-light);
+            color: var(--red);
+        }
+
+        .timeline-icon.fix {
+            background: var(--green-light);
+            color: var(--green);
+        }
+
+        .timeline-icon.warn {
+            background: var(--orange-light);
+            color: var(--orange);
+        }
+
+        .timeline-text strong {
+            color: var(--text);
+            font-weight: 600;
+        }
+
+        /* ── Checklist ────────────────────────────────── */
+        .checklist {
+            padding: 0;
+            list-style: none;
+        }
+
+        .checklist li {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 6px 0;
+            font-size: 14px;
+        }
+
+        .checklist li::before {
+            display: none;
+        }
+
+        .check-box {
+            width: 18px;
+            height: 18px;
+            border-radius: 4px;
+            border: 1.5px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            background: var(--surface);
+        }
+
+        .check-box.checked {
+            background: var(--blue);
+            border-color: var(--blue);
+        }
+
+        .check-box.checked svg {
+            display: block;
+        }
+
+        .check-box svg {
+            width: 12px;
+            height: 12px;
+            fill: none;
+            stroke: white;
+            stroke-width: 2.5;
+            display: none;
+        }
+
+        /* ── Stats Row ────────────────────────────────── */
+        .stat-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-top: 8px;
+        }
+
+        .stat-box {
+            text-align: center;
+            padding: 14px 10px;
+            background: var(--accent-light);
+            border-radius: 6px;
+        }
+
+        .stat-number {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--text);
+            letter-spacing: -0.02em;
+        }
+
+        .stat-desc {
+            font-size: 11px;
+            color: var(--text-secondary);
+            margin-top: 2px;
+        }
+
+        /* ── Insight tag ──────────────────────────────── */
+        .insight-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 12px;
+            font-weight: 500;
+            padding: 3px 10px;
+            border-radius: 4px;
+            margin: 2px 4px 2px 0;
+        }
+
+        .tag-green { background: var(--green-light); color: #1a7a42; }
+        .tag-blue { background: var(--blue-light); color: #2b6cb0; }
+        .tag-orange { background: var(--orange-light); color: #c05621; }
+        .tag-purple { background: var(--purple-light); color: #553c9a; }
+
+        /* ── Connector Arrows between columns ─────────── */
+        .column-connector {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            width: 24px;
+            padding-top: 40px;
+        }
+
+        .column-connector svg {
+            width: 20px;
+            height: 20px;
+            fill: none;
+            stroke: var(--text-tertiary);
+            stroke-width: 1.5;
+        }
+
+        /* ── Footer ───────────────────────────────────── */
+        .showcase-footer {
+            max-width: 760px;
+            margin: 0 auto;
+            padding: 40px 32px 80px;
+            text-align: center;
+        }
+
+        .showcase-footer p {
+            font-size: 14px;
+            color: var(--text-secondary);
+            line-height: 1.65;
+        }
+
+        .showcase-footer a {
+            color: var(--text);
+            text-decoration: underline;
+            text-decoration-color: var(--border);
+            text-underline-offset: 3px;
+            transition: text-decoration-color 0.2s;
+        }
+
+        .showcase-footer a:hover {
+            text-decoration-color: var(--text);
+        }
+
+        /* ── Responsive ───────────────────────────────── */
+        @media (max-width: 768px) {
+            .hero { padding: 40px 20px 32px; }
+            .hero h2 { font-size: 26px; }
+            .board-scroll { padding: 0 16px 32px; }
+            .column { width: 300px; min-width: 300px; }
+            .topbar { padding: 12px 16px; }
+            .phase-nav { padding: 0 16px 24px; }
+            .showcase-footer { padding: 32px 20px 60px; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ── Top Bar ──────────────────────────────────────── -->
+<div class="topbar">
+    <div class="topbar-left">
+        <div class="topbar-icon">
+            <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+        </div>
+        <h1>Command Center</h1>
+        <span class="topbar-breadcrumb">/ Builder Showcase</span>
+    </div>
+    <div class="topbar-right">
+        <a href="{{ url_for('index') }}" class="topbar-link">Dashboard</a>
+        <a href="https://github.com/Doodler-beep/Claude-experiments" class="topbar-link" target="_blank">GitHub</a>
+    </div>
+</div>
+
+<!-- ── Hero ─────────────────────────────────────────── -->
+<div class="hero">
+    <span class="hero-label">Weekend Build</span>
+    <h2>Competitive Intelligence Command Center &mdash; From Insight to System</h2>
+    <p>A weekend build exploring how PMMs can operationalise strategy with AI. This is the thinking behind what I built, what broke, and what I learned.</p>
+</div>
+
+<!-- ── Phase Navigation ────────────────────────────── -->
+<div class="phase-nav">
+    <a href="#col-problem" class="phase-pill active" data-col="problem">Problem</a>
+    <span class="phase-arrow">&rarr;</span>
+    <a href="#col-thinking" class="phase-pill" data-col="thinking">Product Thinking</a>
+    <span class="phase-arrow">&rarr;</span>
+    <a href="#col-design" class="phase-pill" data-col="design">System Design</a>
+    <span class="phase-arrow">&rarr;</span>
+    <a href="#col-broke" class="phase-pill" data-col="broke">What Broke</a>
+    <span class="phase-arrow">&rarr;</span>
+    <a href="#col-product" class="phase-pill" data-col="product">Working Product</a>
+    <span class="phase-arrow">&rarr;</span>
+    <a href="#col-next" class="phase-pill" data-col="next">What's Next</a>
+</div>
+
+<!-- ── Board ────────────────────────────────────────── -->
+<div class="board-scroll" id="board-scroll">
+<div class="board">
+
+    <!-- ══════════════ COLUMN 1: PROBLEM ══════════════ -->
+    <div class="column" id="col-problem">
+        <div class="column-header">
+            <span class="column-dot" style="background: var(--red)"></span>
+            <h3>Problem</h3>
+            <span class="column-count">3</span>
+        </div>
+        <div class="column-cards">
+
+            <div class="card">
+                <span class="card-label" style="background: var(--red-light); color: var(--red);">Problem Statement</span>
+                <h4>Competitive intelligence is broken</h4>
+                <ul>
+                    <li><strong>Manual</strong> &mdash; hours spent checking competitor sites by hand</li>
+                    <li><strong>Fragmented</strong> &mdash; data lives in screenshots, docs, and memory</li>
+                    <li><strong>Reactive</strong> &mdash; you find out after the market has already moved</li>
+                </ul>
+                <p style="margin-top: 12px; font-size: 13px; color: var(--text-secondary);">PMMs spend weeks reacting instead of positioning.</p>
+            </div>
+
+            <div class="card card-quote">
+                <p>"I wanted a system that thinks before the market shifts, not after."</p>
+            </div>
+
+            <div class="card">
+                <span class="card-label" style="background: var(--orange-light); color: var(--orange);">Personal Trigger</span>
+                <ul>
+                    <li><strong>Ryanair case</strong> &mdash; MBA case study on strategy vs. plans</li>
+                    <li><strong>Late-night LinkedIn scroll</strong> &mdash; yet another CI tools post</li>
+                    <li><strong>Frustration</strong> with tools that show data, not meaning</li>
+                </ul>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- connector arrow -->
+    <div class="column-connector">
+        <svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </div>
+
+    <!-- ══════════════ COLUMN 2: PRODUCT THINKING ══════ -->
+    <div class="column" id="col-thinking">
+        <div class="column-header">
+            <span class="column-dot" style="background: var(--orange)"></span>
+            <h3>Product Thinking</h3>
+            <span class="column-count">3</span>
+        </div>
+        <div class="column-cards">
+
+            <div class="card">
+                <span class="card-label" style="background: var(--blue-light); color: var(--blue);">JTBD / Use Cases</span>
+                <ul>
+                    <li><strong>As a PMM,</strong> I want to know when competitors change pricing so I can update battle cards within 24h</li>
+                    <li><strong>As a founder,</strong> I want to spot market gaps before competitors fill them</li>
+                    <li><strong>As a strategy lead,</strong> I want weekly intelligence briefs without manual research</li>
+                </ul>
+            </div>
+
+            <div class="card">
+                <span class="card-label" style="background: var(--accent-light); color: var(--text-secondary);">Non-Goals</span>
+                <ul>
+                    <li>Not enterprise-scale</li>
+                    <li>Not multi-tenant (yet)</li>
+                    <li>Not pixel-perfect UI</li>
+                </ul>
+                <p style="margin-top: 8px; font-size: 13px;">Scope decisions made to ship in a weekend.</p>
+            </div>
+
+            <div class="card card-callout">
+                <h4>Why a weekend?</h4>
+                <p>Constraints force clarity. If you can't explain what it does in one weekend of building, you don't understand the problem well enough.</p>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- connector arrow -->
+    <div class="column-connector">
+        <svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </div>
+
+    <!-- ══════════════ COLUMN 3: SYSTEM DESIGN ═════════ -->
+    <div class="column" id="col-design">
+        <div class="column-header">
+            <span class="column-dot" style="background: var(--blue)"></span>
+            <h3>System Design</h3>
+            <span class="column-count">3</span>
+        </div>
+        <div class="column-cards">
+
+            <div class="card">
+                <span class="card-label" style="background: var(--blue-light); color: var(--blue);">Architecture Sketch</span>
+                <div class="arch-flow">
+                    <div class="arch-node">Competitor Sites</div>
+                    <div class="arch-arrow">&darr;</div>
+                    <div class="arch-node">Web Scraper &amp; Tracker</div>
+                    <div class="arch-arrow">&darr;</div>
+                    <div class="arch-node primary">Claude (AI)</div>
+                    <div class="arch-arrow">&darr;</div>
+                    <div class="arch-row">
+                        <div class="arch-node">SQLite</div>
+                        <div class="arch-node">Storage</div>
+                    </div>
+                    <div class="arch-arrow">&darr;</div>
+                    <div class="arch-node">Web Dashboard</div>
+                </div>
+            </div>
+
+            <div class="card">
+                <span class="card-label" style="background: var(--purple-light); color: var(--purple);">Tech Choices &amp; Rationale</span>
+                <ul>
+                    <li><strong>Flask</strong> &mdash; speed &amp; control over heavy frameworks</li>
+                    <li><strong>SQLite</strong> &mdash; ownership &amp; simplicity, no server needed</li>
+                    <li><strong>Claude</strong> &mdash; reasoning &gt; regurgitation</li>
+                </ul>
+            </div>
+
+            <div class="card card-quote">
+                <p>"Designed for clarity, not cleverness."</p>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- connector arrow -->
+    <div class="column-connector">
+        <svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </div>
+
+    <!-- ══════════════ COLUMN 4: WHAT BROKE ════════════ -->
+    <div class="column" id="col-broke">
+        <div class="column-header">
+            <span class="column-dot" style="background: var(--orange)"></span>
+            <h3>What Broke</h3>
+            <span class="column-count">3</span>
+        </div>
+        <div class="column-cards">
+
+            <div class="card">
+                <span class="card-label" style="background: var(--orange-light); color: var(--orange);">Debugging Timeline</span>
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-icon error">&times;</div>
+                        <div class="timeline-text"><strong>Port conflicts</strong> &mdash; macOS ControlCenter blocking port 5000</div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-icon error">&times;</div>
+                        <div class="timeline-text"><strong>JSON failures</strong> &mdash; 7 failed attempts at passing data through forms</div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-icon error">&times;</div>
+                        <div class="timeline-text"><strong>File corruption</strong> &mdash; curl downloaded a 404 page over source code</div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-icon fix">&check;</div>
+                        <div class="timeline-text"><strong>Temp-file workaround</strong> &mdash; the fix that finally worked</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <span class="card-label" style="background: var(--red-light); color: var(--red);">Error Log Snapshots</span>
+                <div class="code-block">
+<span class="dim">$</span> python src/web_ui.py
+<span class="err">SyntaxError: invalid syntax</span>
+<span class="err">  File "src/web_ui.py", line 101</span>
+<span class="dim">---</span>
+<span class="dim">$</span> lsof -i :5000
+<span class="warn">ControlCenter  PID  user</span>
+<span class="dim">---</span>
+<span class="dim">$</span> curl -o src/web_ui.py https://...
+<span class="err">404: Not Found</span>
+<span class="dim"># entire file replaced with error page</span>
+                </div>
+            </div>
+
+            <div class="card">
+                <h4>The real numbers</h4>
+                <div class="stat-row">
+                    <div class="stat-box">
+                        <div class="stat-number">12+</div>
+                        <div class="stat-desc">Syntax errors fixed</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-number">3</div>
+                        <div class="stat-desc">File corruptions</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-number">7</div>
+                        <div class="stat-desc">JSON fix attempts</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-number">14h</div>
+                        <div class="stat-desc">Total build time</div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- connector arrow -->
+    <div class="column-connector">
+        <svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </div>
+
+    <!-- ══════════════ COLUMN 5: WORKING PRODUCT ═══════ -->
+    <div class="column" id="col-product">
+        <div class="column-header">
+            <span class="column-dot" style="background: var(--green)"></span>
+            <h3>Working Product</h3>
+            <span class="column-count">3</span>
+        </div>
+        <div class="column-cards">
+
+            <div class="card">
+                <span class="card-label" style="background: var(--green-light); color: var(--green);">What shipped</span>
+                <div class="code-block">
+<span class="dim">$</span> python main.py scan
+<span class="ok">Scanning Microsoft Teams...</span>
+<span class="ok">&#10003; Scanned 2 pages</span>
+<span class="ok">Scanning Zoom Team Chat...</span>
+<span class="ok">&#10003; Scanned 2 pages</span>
+<span class="dim">---</span>
+<span class="ok">Scan Complete!</span>
+  New pages tracked: 6
+  Changes detected: 0 (baseline)
+                </div>
+                <p style="margin-top: 10px;">From raw change &mdash; strategic action in minutes.</p>
+            </div>
+
+            <div class="card">
+                <span class="card-label" style="background: var(--green-light); color: var(--green);">Impact &amp; Learnings</span>
+                <ul>
+                    <li><strong>Error handling = product quality</strong> &mdash; not just catching errors, but preventing them</li>
+                    <li><strong>UX &gt; raw power</strong> &mdash; the web UI made it 10x more valuable</li>
+                    <li><strong>File corruption</strong> taught me about defensive coding</li>
+                    <li><strong>Temp-file workaround</strong> &mdash; simple beats clever</li>
+                </ul>
+            </div>
+
+            <div class="card card-highlight">
+                <h4>By the numbers</h4>
+                <div class="stat-row">
+                    <div class="stat-box">
+                        <div class="stat-number">1,885</div>
+                        <div class="stat-desc">Lines of code</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-number">40%</div>
+                        <div class="stat-desc">Error handling</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-number">10+h</div>
+                        <div class="stat-desc">Saved per week</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-number">$0</div>
+                        <div class="stat-desc">Cost (open source)</div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- connector arrow -->
+    <div class="column-connector">
+        <svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </div>
+
+    <!-- ══════════════ COLUMN 6: WHAT'S NEXT ═══════════ -->
+    <div class="column" id="col-next">
+        <div class="column-header">
+            <span class="column-dot" style="background: var(--purple)"></span>
+            <h3>What's Next</h3>
+            <span class="column-count">3</span>
+        </div>
+        <div class="column-cards">
+
+            <div class="card">
+                <span class="card-label" style="background: var(--purple-light); color: var(--purple);">Ideas I didn't have time to build (yet)</span>
+                <ul class="checklist">
+                    <li>
+                        <span class="check-box checked"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></span>
+                        <span>Slack alerts</span>
+                    </li>
+                    <li>
+                        <span class="check-box checked"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></span>
+                        <span>Multi-user support</span>
+                    </li>
+                    <li>
+                        <span class="check-box checked"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></span>
+                        <span>Market maps</span>
+                    </li>
+                    <li>
+                        <span class="check-box checked"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></span>
+                        <span>CRM integration</span>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="card">
+                <span class="card-label" style="background: var(--blue-light); color: var(--blue);">What Changed My Thinking</span>
+                <ul>
+                    <li><strong>Error handling = product quality</strong> &mdash; not an afterthought</li>
+                    <li><strong>UX &gt; raw power</strong> &mdash; the extra day of UI work made it usable by anyone</li>
+                    <li><strong>AI as collaborator, not magic</strong> &mdash; I defined, tested, and persisted; Claude coded and debugged</li>
+                </ul>
+            </div>
+
+            <div class="card card-highlight">
+                <h4>Open questions</h4>
+                <ul>
+                    <li>Can this become a SaaS product?</li>
+                    <li>What does multi-tenant CI look like?</li>
+                    <li>How do non-technical founders adopt this?</li>
+                </ul>
+                <div style="margin-top: 12px; display: flex; flex-wrap: wrap; gap: 4px;">
+                    <span class="insight-tag tag-purple">product-market fit</span>
+                    <span class="insight-tag tag-blue">distribution</span>
+                    <span class="insight-tag tag-green">open source</span>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+</div>
+
+<!-- ── Footer ──────────────────────────────────────── -->
+<div class="showcase-footer">
+    <p style="margin-bottom: 8px; font-style: italic; color: var(--text-tertiary);">
+        "Not in one night. Not perfectly. But it works. And that's what matters."
+    </p>
+    <p>
+        Built over a weekend with Claude Code, persistence, and too much coffee.<br>
+        <a href="https://github.com/Doodler-beep/Claude-experiments" target="_blank">View on GitHub</a>
+    </p>
+</div>
+
+<!-- ── Scroll-to-column interactivity ──────────────── -->
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var pills = document.querySelectorAll('.phase-pill');
+        var boardScroll = document.getElementById('board-scroll');
+
+        pills.forEach(function(pill) {
+            pill.addEventListener('click', function(e) {
+                e.preventDefault();
+                var targetId = pill.getAttribute('href').substring(1);
+                var target = document.getElementById(targetId);
+                if (target && boardScroll) {
+                    var scrollLeft = target.offsetLeft - boardScroll.offsetLeft - 32;
+                    boardScroll.scrollTo({ left: scrollLeft, behavior: 'smooth' });
+                }
+                pills.forEach(function(p) { p.classList.remove('active'); });
+                pill.classList.add('active');
+            });
+        });
+
+        // Update active pill on scroll
+        if (boardScroll) {
+            boardScroll.addEventListener('scroll', function() {
+                var columns = document.querySelectorAll('.column');
+                var scrollCenter = boardScroll.scrollLeft + boardScroll.clientWidth / 3;
+                var closest = null;
+                var closestDist = Infinity;
+
+                columns.forEach(function(col) {
+                    var dist = Math.abs(col.offsetLeft - boardScroll.offsetLeft - scrollCenter);
+                    if (dist < closestDist) {
+                        closestDist = dist;
+                        closest = col;
+                    }
+                });
+
+                if (closest) {
+                    pills.forEach(function(p) {
+                        p.classList.toggle('active',
+                            p.getAttribute('href') === '#' + closest.id);
+                    });
+                }
+            });
+        }
+    });
+</script>
+
+</body>
+</html>

@@ -1,10 +1,10 @@
 # How I Built a Competitive Intelligence Command Center with Claude Code
 
-**The messy, real story of building a production system with AI assistance — started on a weekend, refined over the week, showcased the next weekend**
+**The messy, real story of building a production system with AI assistance — started mid-week, refined over the following days, showcased two weeks later**
 
 ---
 
-## Friday, 11:30 PM – The Idea Strikes
+## Wednesday, 9:30 PM – The Idea Strikes
 
 ### A Lesson from Ryanair
 
@@ -14,7 +14,7 @@ The difference? A plan is internal. A strategy is about playing to win by unders
 
 This case study taught me that competitive intelligence isn't optional—it's the foundation of strategy.
 
-### Friday, 11:47 PM – The Product Marketer's Problem
+### Wednesday, 9:47 PM – The Product Marketer's Problem
 
 I'm lying in bed, scrolling through LinkedIn on my phone, and I see yet another post about competitive intelligence tools. Product marketers spend an enormous amount of time on this:
 
@@ -30,7 +30,7 @@ So I opened Claude Code on my phone and started asking questions.
 
 ---
 
-## Friday, 11:58 PM – First Attempt (On My Phone)
+## Wednesday, 9:58 PM – First Attempt (On My Phone)
 
 I'm not technical. I'm a product marketer. But I figured, "Claude Code can help me build this, right?"
 
@@ -360,12 +360,12 @@ Where did the extra 1,000 lines go?
 ## The Real Numbers
 
 **Time Investment:**
-- Friday night: 2 hours (exploration on phone)
+- Wednesday night: 2 hours (exploration on phone)
 - Saturday: 8 hours (building + debugging)
 - Sunday: 4 hours (testing + polish)
 - Following week: pockets of time refining, fixing edge cases, improving UX
-- Next weekend: building the showcase and polishing for public
-- **Core build: ~14 hours over the first weekend, plus ongoing refinement**
+- Two weeks later: building the showcase and polishing for public
+- **Core build: ~14 hours over Wednesday-Sunday, plus ongoing refinement**
 
 **Bugs Fixed:**
 - Syntax errors: 12+
@@ -514,7 +514,7 @@ python src/web_ui.py
 "I built a competitive intelligence system in one caffeinated all-nighter!"
 
 **The Real Version:**
-"The core was built over a weekend — debugging syntax errors, fighting file corruption, fixing JSON parsing issues, and nearly quitting three times. Then I spent the following week refining it in pockets of spare time. And the weekend after, I built the showcase to share the thinking behind it. It wasn't one heroic session. It was persistence across days and weeks."
+"Started Wednesday night on my phone. Heavy building and debugging over Saturday. More work Sunday. Then I refined it during the following week in pockets of spare time. Two weeks later, I built the showcase to share the thinking behind it. It wasn't one heroic session. It was persistence across days and weeks."
 
 **Which story is better?**
 
@@ -598,7 +598,7 @@ And that's what matters.
 
 ---
 
-*Started over a weekend with Claude Code. Refined during the week. Showcased the next weekend. Built with debugging, persistence, and way too much coffee.*
+*Started mid-week with Claude Code. Heavy work on the weekend. Refined over the following days. Showcased two weeks later. Built with debugging, persistence, and way too much coffee.*
 
 *Open sourced because competitive intelligence shouldn't cost $50K/year.*
 

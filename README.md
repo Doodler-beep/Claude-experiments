@@ -2,7 +2,7 @@
 
 **AI-powered competitive intelligence automation for teams and businesses.**
 
-Built by a product marketer (not a software engineer) using Claude Code as a pair programmer. The idea started late on a Friday night, the core system was built over a weekend, refined during the week in pockets of spare time, and is now being showcased the following weekend. [Read the full building story](BUILDING_STORY.md) or [view the interactive showcase](templates/showcase.html).
+Built by a product marketer (not a software engineer) using Claude Code as a pair programmer. The idea started late on a Friday night, the core system was built over a weekend, refined during the following weeks in pockets of spare time, and is now being showcased. [Read the full building story](BUILDING_STORY.md) or [view the interactive showcase](templates/showcase.html).
 
 An open-source tool that monitors competitors 24/7, detects changes automatically, and generates strategic insights using Claude AI.
 
